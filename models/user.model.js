@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 3,
-        maxLength: 20,
+        maxLength: 50,
         validate: [isEmail],
         lowerCase: true,
         unique: true,
@@ -53,6 +53,18 @@ userSchema.pre("save", async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
+
+userSchema.statics.login = async function(pseudo, password) {
+    const user = await this.findOne({pseudo});
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            return user;
+        }
+        throw Error('mot de passe incorrect');
+    }
+    throw Error('pseudo incorrect');
+}
 
 const userModel = mongoose.model('user', userSchema);
 
