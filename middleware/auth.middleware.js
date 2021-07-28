@@ -12,7 +12,7 @@ module.exports.checkUser = (req, res, next) => {
             } else {
                 let user = await userModel.findById(decodedToken.id);
                 res.locals.user = user;
-                console.log(user);
+                console.log(res.locals.user);
                 next();
             }
         })
@@ -27,8 +27,10 @@ module.exports.requireAuth = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.TOKEN_SECRET, async(err, decodedToken) => {
             if (err) {
+                console.log('+++ 987197 +++');
                 console.log(err);
             } else {
+                console.log('+++ 187197 +++');
                 console.log(decodedToken.id);
                 next();
             }

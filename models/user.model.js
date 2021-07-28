@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     pseudo: {
         type: String,
         required: true,
-        minLength: 3,
+        minlength: 3,
         maxLength: 20,
         unique: true,
         trim: true
@@ -14,17 +14,17 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        minLength: 3,
+        minlength: 3,
         maxLength: 50,
         validate: [isEmail],
-        lowerCase: true,
+        lowercase: true,
         unique: true,
         trim: true
     },
     password: {
         type: String,
         required: true,
-        minLength: 6,
+        minlength: 6,
         maxLength: 1024
     },
     picture: {
